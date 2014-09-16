@@ -2,15 +2,15 @@ var max = 100
 
 var hiddenNumber = 85
 
-// function valid?(guess){
-//   if(guess < 0 || guess > 100){
-//     return true;
-//     }
-//   else{
-//     return false;
-//     }
-//   }
-// }
+function valid(userGuess,max){
+  if(isNaN(userGuess) || userGuess < 0 || userGuess > max){
+    return false;
+    }
+  else{
+    return true;
+    }
+  }
+
 
 // var hiddenNumber = Math.floor((Math.random() * 101));
 
@@ -22,24 +22,29 @@ $(document).ready(function(){
   $("#gameBox").on("submit", function(event){
       event.preventDefault();
       var guess = parseInt($("#userInput").val());
+      debugger
+      if(valid(guess,max)){
+        if(guess > hiddenNumber){
+          $("#feedback").text("Your guess of " + guess + " was too high! Guess again")
+        }
+        else if(guess < hiddenNumber){
+          $("#feedback").text("Your guess of " + guess + " was too low! Guess again.")
+          $("#feedback").removeClass("hidden")
 
-      // while(guess < 0 || guess > 100){
-      //   if(guess < 0){
-      //     $("#feedback").text("Your guess was less than 0.  Please only guess values from 0 to " + max + ".")
-      //   }
-      //   else{
-      //     $("#feedback").text("Your guess was greater than 100.  Please only guess values from 0 to " + max + ".")
-      //   };
-      //   $("#feedback").removeClass("hidden");
-      // };
-      if(guess > hiddenNumber){
-        $("#feedback").text("Your guess of " + guess + " was too high! Guess again")
+        }
+        else{
+
+          $("#feedback").text("You guessed right! The hidden number was " + hiddenNumber + ". Click \"Play Again\" to restart");
+          $("#restart").removeClass("hidden");
+        }
+        ;
+
       }
       else{
-        $("#feedback").text("Your guess of " + guess + " was too low! Guess again")
+        $("#feedback").text("Your guess was invalid. Please guess a number from 0 to " + max + ".");
       };
-        $("#feedback").removeClass("hidden");
 
-      alert("The square of " + guess + " is " + (guess * guess));
+
+
     });
 });
